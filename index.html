@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html lang="pt-PT" translate="no"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0e2a1f">
+<meta http-equiv="Content-Language" content="pt-PT">
+<meta name="language" content="pt-PT">
+<title>VanBerto's — Sopa de Letras · Natal</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Fredoka+One&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ═══ RESET & BASE ═══ */
+*{box-sizing:border-box;margin:0;padding:0}
+html{height:100%}
+body{
+  font-family:'Nunito','Baloo 2',sans-serif;
+  background:#0e2a1f;
+  min-height:100%;
+  overflow-x:hidden;
+  user-select:none;
+  -webkit-user-select:none;
+}
+
+@keyframes vbFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+#prof-tag{position:fixed;bottom:.6rem;left:50%;transform:translateX(-50%);z-index:600;font-family:'Nunito',sans-serif;font-size:clamp(.65rem,1.8vw,.78rem);color:#d8ecd9;font-weight:800;white-space:nowrap;text-shadow:0 1px 6px rgba(0,0,0,.8);pointer-events:none;}
+
+/* ═══ SCREENS ═══ */
+.screen{
+  display:none;
+  min-height:100vh;
+  min-height:100dvh;
+  padding:1.5rem 1rem 4rem;
+  padding-bottom:max(4rem, calc(4rem + env(safe-area-inset-bottom)));
+  align-items:center;justify-content:center;flex-direction:column;
+}
+.screen.active{display:flex;}
+
+/* overlay bg animation */
+.screen{
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 45%,rgba(214,40,57,.16) 0%,rgba(14,42,31,0) 55%,rgba(5,15,10,.94) 100%),
+    rgba(5,15,10,.9);
+  animation:festFlicker 6s ease-in-out infinite;
+}
+@keyframes festFlicker{
+  0%,100%{background:radial-gradient(ellipse 70% 55% at 50% 45%,rgba(214,40,57,.16) 0%,rgba(14,42,31,0) 55%,rgba(5,15,10,.94) 100%),rgba(5,15,10,.9);}
+  33%{background:radial-gradient(ellipse 68% 53% at 51% 43%,rgba(255,200,50,.18) 0%,rgba(14,42,31,0) 55%,rgba(5,15,10,.92) 100%),rgba(5,15,10,.9);}
+  66%{background:radial-gradient(ellipse 72% 58% at 49% 47%,rgba(80,200,120,.14) 0%,rgba(14,42,31,0) 55%,rgba(5,15,10,.92) 100%),rgba(5,15,10,.9);}
+}
+
+/* ═══ CARD (modal) ═══ */
+.modal-card{
+  width:min(560px,96vw);
+  background:linear-gradient(145deg,#16402f 0%,#0d2a1e 60%,#07170f 100%);
+  border-radius:16px;
+  box-shadow:0 0 0 3px #d62839,0 0 0 5px #ffd35a,8px 8px 0 #04100a,0 0 50px rgba(214,40,57,.22),inset 0 1px 0 rgba(255,200,100,.1);
+  padding:clamp(16px,3vw,26px) clamp(14px,3vw,24px) clamp(14px,2.5vw,20px);
+  position:relative;
+  animation:cardPop .25s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes cardPop{from{transform:scale(.88) rotate(-1.5deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.modal-card::before{content:'🎄';position:absolute;top:8px;left:10px;font-size:18px;opacity:.65;pointer-events:none}
+.modal-card::after{content:'🎁';position:absolute;bottom:8px;right:10px;font-size:18px;opacity:.65;pointer-events:none}
+
+/* robot + bubble row inside modal */
+.modal-robot-row{
+  display:flex;align-items:center;justify-content:center;gap:0;
+  margin-bottom:16px;
+}
+.modal-robot{
+  height:clamp(72px,14vw,96px);width:auto;flex-shrink:0;
+  filter:drop-shadow(0 0 14px rgba(56,189,248,.8));
+  animation:vbFloat 3s ease-in-out infinite;
+}
+.modal-robot-arm{transform-origin:65px 37px;animation:waveArm 1.6s ease-in-out infinite;}
+@keyframes waveArm{0%,100%{transform:rotate(0)}25%,75%{transform:rotate(-20deg)}}
+.modal-eyelid{transform-origin:40px 23px;animation:eyeBlink 5s ease-in-out infinite;}
+@keyframes eyeBlink{0%,88%,100%{transform:scaleY(0)}93%{transform:scaleY(1)}}
+
+/* bubble pointing LEFT (toward the robot on its left) */
+.modal-bubble-box{
+  background:linear-gradient(135deg,#dcebff,#fff);
+  border:3px solid #0f172a;outline:2px solid #1e293b;outline-offset:-4px;
+  border-radius:20px;
+  padding:10px 14px 10px 18px;
+  box-shadow:4px 4px 0 #0f172a;
+  font-family:"Comic Sans MS","Trebuchet MS",sans-serif;
+  font-size:clamp(.78rem,2.3vw,.95rem);
+  font-weight:bold;color:#0f172a;
+  max-width:210px;line-height:1.45;text-align:center;
+  position:relative;
+  margin-left:10px;
+}
+/* triangle pointing left */
+.modal-bubble-box::after{
+  content:"";position:absolute;
+  left:-16px;top:50%;transform:translateY(-50%);
+  border-top:10px solid transparent;border-bottom:10px solid transparent;
+  border-right:16px solid #0f172a;
+}
+.modal-bubble-box::before{
+  content:"";position:absolute;
+  left:-11px;top:50%;transform:translateY(-50%);
+  border-top:8px solid transparent;border-bottom:8px solid transparent;
+  border-right:12px solid #dcebff;
+  z-index:1;
+}
+
+.modal-title{
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(1.2rem,4vw,1.6rem);
+  color:#ffd35a;text-align:center;
+  text-shadow:0 2px 10px rgba(214,40,57,.45);
+  margin-bottom:clamp(6px,1.5vw,12px);
+  border-bottom:2px solid rgba(214,40,57,.4);
+  padding-bottom:8px;
+}
+.modal-sub{
+  color:#d8ecd9;font-size:clamp(.78rem,2vw,.9rem);
+  text-align:center;margin-bottom:clamp(8px,2vw,14px);
+  font-weight:700;line-height:1.4;
+}
+
+/* name input */
+.name-row{display:flex;align-items:center;gap:10px;margin:0 0 10px;flex-wrap:wrap;justify-content:center}
+.name-row label{font-family:'Baloo 2',sans-serif;font-weight:900;font-size:13px;color:#ffd35a;white-space:nowrap}
+.name-row input{
+  flex:1;min-width:150px;
+  border:2px solid #d62839;border-radius:8px;padding:7px 12px;
+  font-size:14px;font-family:'Nunito',sans-serif;font-weight:800;
+  background:#0d2a1e;color:#ffd35a;outline:none;
+  box-shadow:2px 2px 0 #d62839;
+  transition:box-shadow .15s;
+}
+.name-row input:focus{box-shadow:2px 2px 0 #ffd35a,0 0 0 3px rgba(214,40,57,.3)}
+.name-row input::placeholder{color:#9bd0a8;opacity:.7}
+
+/* level buttons */
+.level-bar{display:flex;gap:8px;justify-content:center;margin:0 0 5px;flex-wrap:wrap}
+.lvl-btn{
+  font-family:'Baloo 2',sans-serif;font-size:.82rem;font-weight:900;
+  padding:.34rem .85rem;border-radius:20px;border:2px solid transparent;
+  cursor:pointer;transition:all .18s;background:rgba(214,40,57,.06);
+}
+.lvl-btn.easy{border-color:#4ecb71;color:#4ecb71}
+.lvl-btn.easy.active{background:#4ecb71;color:#07170f;box-shadow:0 0 12px rgba(78,203,113,.45)}
+.lvl-btn.medium{border-color:#ff9f43;color:#ff9f43}
+.lvl-btn.medium.active{background:#ff9f43;color:#07170f;box-shadow:0 0 12px rgba(255,159,67,.45)}
+.lvl-btn.hard{border-color:#d62839;color:#d62839}
+.lvl-btn.hard.active{background:#d62839;color:#fff8e0;box-shadow:0 0 12px rgba(214,40,57,.5)}
+.lvl-desc{font-size:11px;color:#d8ecd9;text-align:center;margin-bottom:10px;font-style:italic;min-height:14px}
+
+/* buttons */
+.btn{
+  font-family:'Baloo 2',sans-serif;
+  border:2.5px solid #d62839;
+  background:linear-gradient(180deg,#1f5a40,#144031);
+  color:#ffd35a;border-radius:10px;
+  padding:clamp(7px,1.5vw,10px) clamp(12px,2.5vw,18px);
+  font-weight:900;font-size:clamp(.78rem,1.8vw,.88rem);
+  cursor:pointer;
+  box-shadow:4px 4px 0 #04100a,inset 0 1px 0 rgba(255,180,80,.1);
+  transition:transform .08s,box-shadow .08s,background .12s;
+  letter-spacing:.2px;
+}
+.btn:hover{background:linear-gradient(180deg,#2a7556,#1c5a42);transform:translate(-1px,-1px);box-shadow:5px 5px 0 #04100a}
+.btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #04100a}
+.btn.primary{
+  background:linear-gradient(180deg,#d62839,#a81d2b);
+  color:#fff8e0;border-color:#ffd35a;
+  box-shadow:4px 4px 0 #04100a,inset 0 1px 0 rgba(255,220,100,.2);
+  text-shadow:0 1px 3px rgba(0,0,0,.35);
+}
+.btn.primary:hover{background:linear-gradient(180deg,#e8485a,#c0293a)}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.tiny{margin-top:10px;font-size:11px;color:#d8ecd9;opacity:.8;font-style:italic;text-align:center}
+
+/* ═══ GAME SCREEN ═══ */
+#gameScreen{
+  padding-top:.4rem;
+  padding-bottom:max(3rem, calc(3rem + env(safe-area-inset-bottom)));
+  padding-left:.5rem;
+  padding-right:.5rem;
+  background:#0e2a1f;
+  animation:none;
+  align-items:stretch;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+.game-header{
+  width:100%;max-width:1100px;
+  margin:0 auto .2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:.3rem;
+  padding:0 .1rem;
+}
+.header-actions{
+  display:flex;align-items:center;gap:5px;flex-wrap:wrap;
+}
+.btn-sm{
+  padding:4px 10px !important;
+  font-size:.72rem !important;
+}
+.game-player{
+  font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:800;
+  color:#d8ecd9;display:flex;align-items:center;gap:.3rem;
+}
+.level-bar-game{display:flex;gap:6px;justify-content:center;flex:1;}
+
+/* progress */
+.progress-wrap{
+  width:100%;max-width:1100px;margin:0 auto .3rem;
+  background:rgba(214,40,57,.12);border:1px solid rgba(255,211,90,.18);
+  border-radius:10px;overflow:hidden;height:7px;
+}
+.progress-bar{height:100%;background:linear-gradient(90deg,#d62839,#ffd35a);border-radius:10px;transition:width .4s}
+
+/* ── LAYOUT: grid left, sidebar right on desktop ── */
+.game-layout{
+  width:100%;max-width:1100px;
+  margin:0 auto;
+  display:flex;
+  flex-direction:row;
+  gap:clamp(6px,1.2vw,16px);
+  align-items:flex-start;
+  flex:1;
+}
+
+/* GRID */
+#grid-wrap{
+  flex:0 0 auto;
+  min-width:0;
+  display:flex;
+  justify-content:center;
+  overflow:hidden;
+}
+#grid{
+  display:grid;
+  cursor:pointer;
+  user-select:none;
+  -webkit-user-select:none;
+  touch-action:none;
+}
+.cell{
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Baloo 2',sans-serif;font-weight:900;
+  border-radius:5px;
+  background:rgba(214,40,57,.08);
+  color:#ffd35a;
+  border:1.5px solid rgba(214,40,57,.22);
+  transition:background .08s,color .08s;
+  touch-action:none;
+  -webkit-touch-callout:none;
+  aspect-ratio:1;
+  position:relative;
+  /* font-size set by JS */
+}
+.cell.selecting{background:rgba(255,211,90,.32);color:#fff;border-color:#ffd35a}
+.cell:focus{outline:none;}
+.cell:focus-visible{
+  outline:3px solid #fff;
+  box-shadow:0 0 0 3px #d62839,0 0 0 6px rgba(255,255,255,.6);
+  z-index:2;
+}
+
+/* badge numerada (modo daltónico) — funciona independentemente da cor */
+.cell[data-widx]::after{
+  content:attr(data-widx);
+  display:none;
+  position:absolute;top:1px;right:1px;
+  min-width:12px;height:12px;padding:0 1px;
+  line-height:12px;font-size:8px;font-weight:900;
+  background:#0f172a;color:#fff;border-radius:50%;
+  text-align:center;pointer-events:none;
+}
+body.cb-mode .cell[data-widx]::after{display:block;}
+
+/* found colours — via variáveis CSS para permitir paleta alternativa (modo daltónico) */
+:root{
+  --bc0:#ff6b9d;--fc0:#fff;
+  --bc1:#36b5f5;--fc1:#fff;
+  --bc2:#4ecb71;--fc2:#07170f;
+  --bc3:#ff9f43;--fc3:#07170f;
+  --bc4:#a29bfe;--fc4:#fff;
+  --bc5:#fd79a8;--fc5:#fff;
+  --bc6:#00cec9;--fc6:#fff;
+  --bc7:#ffd35a;--fc7:#07170f;
+  --bc8:#d62839;--fc8:#fff;
+  --bc9:#6c5ce7;--fc9:#fff;
+  --bc10:#00b894;--fc10:#fff;
+  --bc11:#e17055;--fc11:#fff;
+  --bc12:#b8860b;--fc12:#fff;
+}
+body.cb-mode{
+  --bc0:#e69f00;--fc0:#000;
+  --bc1:#56b4e9;--fc1:#000;
+  --bc2:#009e73;--fc2:#fff;
+  --bc3:#f0e442;--fc3:#000;
+  --bc4:#0072b2;--fc4:#fff;
+  --bc5:#d55e00;--fc5:#fff;
+  --bc6:#cc79a7;--fc6:#000;
+  --bc7:#999999;--fc7:#fff;
+  --bc8:#ffb000;--fc8:#000;
+  --bc9:#648fff;--fc9:#fff;
+  --bc10:#785ef0;--fc10:#fff;
+  --bc11:#dc267f;--fc11:#fff;
+  --bc12:#004d40;--fc12:#fff;
+}
+.found-0{background:var(--bc0)!important;color:var(--fc0)!important;border-color:var(--bc0)!important}
+.found-1{background:var(--bc1)!important;color:var(--fc1)!important;border-color:var(--bc1)!important}
+.found-2{background:var(--bc2)!important;color:var(--fc2)!important;border-color:var(--bc2)!important}
+.found-3{background:var(--bc3)!important;color:var(--fc3)!important;border-color:var(--bc3)!important}
+.found-4{background:var(--bc4)!important;color:var(--fc4)!important;border-color:var(--bc4)!important}
+.found-5{background:var(--bc5)!important;color:var(--fc5)!important;border-color:var(--bc5)!important}
+.found-6{background:var(--bc6)!important;color:var(--fc6)!important;border-color:var(--bc6)!important}
+.found-7{background:var(--bc7)!important;color:var(--fc7)!important;border-color:var(--bc7)!important}
+.found-8{background:var(--bc8)!important;color:var(--fc8)!important;border-color:var(--bc8)!important}
+.found-9{background:var(--bc9)!important;color:var(--fc9)!important;border-color:var(--bc9)!important}
+.found-10{background:var(--bc10)!important;color:var(--fc10)!important;border-color:var(--bc10)!important}
+.found-11{background:var(--bc11)!important;color:var(--fc11)!important;border-color:var(--bc11)!important}
+.found-12{background:var(--bc12)!important;color:var(--fc12)!important;border-color:var(--bc12)!important}
+
+
+/* SIDEBAR → vertical on desktop, horizontal on mobile */
+.sidebar{
+  flex:1;min-width:160px;max-width:240px;
+  display:flex;flex-direction:column;flex-wrap:nowrap;
+  align-items:center;
+  gap:10px;
+  padding:.5rem .5rem;
+  background:rgba(214,40,57,.04);
+  border:1px solid rgba(214,40,57,.18);
+  border-radius:10px;
+  position:sticky;top:.5rem;
+}
+/* words zone fills remaining space and wraps */
+.words-zone{
+  display:flex;flex-direction:column;flex-wrap:nowrap;
+  gap:5px;align-items:stretch;width:100%;
+}
+.words-title{
+  font-family:'Baloo 2',sans-serif;font-size:.72rem;font-weight:900;
+  color:#d62839;letter-spacing:.3px;
+  display:flex;align-items:center;gap:4px;
+  white-space:nowrap;margin-bottom:2px;
+}
+.word-item{
+  display:flex;align-items:center;gap:6px;
+  font-family:'Baloo 2',sans-serif;
+  font-size:clamp(.68rem,1vw,.82rem);
+  font-weight:800;
+  padding:4px 10px;border-radius:6px;
+  color:#ffd35a;
+  border:1px solid rgba(214,40,57,.25);
+  background:rgba(214,40,57,.07);
+  white-space:nowrap;
+}
+.word-item.done{text-decoration:line-through;opacity:.3;cursor:pointer;transition:opacity .15s}
+.word-item.done:hover,.word-item.done:focus-visible{opacity:.65}
+.word-item.done:active{opacity:.85}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.num-badge{
+  display:none;align-items:center;justify-content:center;
+  width:15px;height:15px;border-radius:50%;
+  background:#0f172a;color:#fff;font-size:9px;font-weight:900;
+  flex-shrink:0;
+}
+body.cb-mode .num-badge{display:inline-flex;}
+
+.sr-only{
+  position:absolute;width:1px;height:1px;
+  padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+
+/* mobile: switch sidebar back to horizontal row */
+@media(max-width:700px){
+  .game-layout{
+    flex-direction:column;
+    align-items:center;
+    max-width:100%;
+  }
+  #grid-wrap{width:100%;}
+  .sidebar{
+    width:100%;max-width:100%;min-width:0;
+    flex-direction:row;flex-wrap:nowrap;
+    position:static;
+    padding:.35rem .4rem;
+    gap:8px;
+  }
+  .words-zone{
+    flex-direction:row;flex-wrap:wrap;
+    flex:1;min-width:0;
+  }
+  #word-list{flex-direction:row!important;flex-wrap:wrap!important;align-items:center!important;}
+  .word-item{font-size:clamp(.58rem,2.5vw,.76rem);}
+}
+
+/* msg + score — now above grid inside layout */
+#msg{
+  width:100%;max-width:1100px;margin:.1rem auto 0;
+  text-align:center;
+  font-family:'Baloo 2',sans-serif;font-size:.85rem;font-weight:900;
+  color:#d62839;min-height:1.1rem;
+  text-shadow:0 1px 6px rgba(214,40,57,.35);
+}
+#score{
+  width:100%;max-width:1100px;margin:0 auto .1rem;
+  text-align:center;font-size:.72rem;color:#d8ecd9;font-style:italic;
+}
+.bottom-bar{display:none;}
+
+/* ═══ ROBOT ═══ */
+.robot-wrap{
+  display:none;
+  flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  flex-shrink:0;
+}
+.robot-wrap.visible{display:flex;}
+.robot-name{
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(.65rem,1.6vw,.8rem);
+  color:#ffd35a;
+  text-shadow:0 1px 6px rgba(0,0,0,.8),0 0 10px rgba(214,40,57,.4);
+  text-align:center;
+  margin-top:1px;
+  line-height:1.2;
+  letter-spacing:.02em;
+}
+/* Bubble above robot — arrow points DOWN */
+.bubble{
+  --bc:#dcebff;
+  background:linear-gradient(135deg,var(--bc),#fff);
+  border:3px solid #0f172a;outline:2px solid #1e293b;outline-offset:-4px;
+  border-radius:16px;padding:6px 10px 5px;
+  box-shadow:3px 3px 0 #0f172a;
+  font-family:"Comic Sans MS","Trebuchet MS",sans-serif;
+  font-size:clamp(.6rem,1.5vw,.78rem);font-weight:bold;color:#0f172a;
+  max-width:180px;min-width:80px;text-align:center;
+  pointer-events:none;position:relative;
+  opacity:0;transform:translateY(-6px) scale(.88);
+  transition:opacity .38s,transform .38s cubic-bezier(.34,1.56,.64,1);
+  margin-bottom:4px;
+}
+/* arrow pointing down toward robot head */
+.bubble::after{
+  content:"";position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);
+  border-left:10px solid transparent;border-right:10px solid transparent;
+  border-top:14px solid #0f172a;
+}
+.bubble::before{
+  content:"";position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);
+  border-left:8px solid transparent;border-right:8px solid transparent;
+  border-top:11px solid var(--bc);z-index:1;
+}
+.bubble.show{opacity:1;transform:translateY(0) scale(1);}
+#vb-robot{
+  width:clamp(44px,6vw,64px);
+  cursor:pointer;flex-shrink:0;
+  animation:vbFloat 3s ease-in-out infinite;
+  filter:drop-shadow(0 0 10px #7dd3fc);
+}
+#vb-robot:hover{filter:drop-shadow(0 0 22px #38bdf8);}
+#vb-robot.bounce{animation:robotPop .65s cubic-bezier(.34,1.56,.64,1),vbFloat 3s ease-in-out .65s infinite;}
+@keyframes robotPop{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(-18px) rotate(-6deg)}70%{transform:translateY(-8px) rotate(5deg)}}
+.vb-arm{transform-origin:65px 37px;animation:waveArm 1.5s ease-in-out infinite;}
+.vb-eyelid{transform-origin:40px 23px;animation:eyeBlink 5s ease-in-out infinite;}
+
+/* ═══ ROBOT FLUTUANTE FIXO ═══ */
+#fixed-robot-wrap{
+  position:fixed;
+  bottom:clamp(.6rem,2vh,1.2rem);
+  right:clamp(.6rem,2vw,1.2rem);
+  z-index:650;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+  pointer-events:auto;
+}
+#fixed-robot-wrap.visible{display:flex;}
+#fixed-vb-robot{
+  width:clamp(64px,8.5vw,92px);
+  height:auto;
+  display:block;
+  cursor:pointer;
+  animation:vbFloat 3s ease-in-out infinite;
+  filter:drop-shadow(0 0 12px #7dd3fc);
+}
+#fixed-vb-robot:hover{filter:drop-shadow(0 0 24px #38bdf8);}
+#fixed-vb-robot.bounce{animation:robotPop .65s cubic-bezier(.34,1.56,.64,1),vbFloat 3s ease-in-out .65s infinite;}
+#fixed-bubble{
+  --bc:#dcebff;
+  background:linear-gradient(135deg,var(--bc),#fff);
+  border:3px solid #0f172a;outline:2px solid #1e293b;outline-offset:-4px;
+  border-radius:16px;padding:6px 10px 5px;
+  box-shadow:3px 3px 0 #0f172a;
+  font-family:"Comic Sans MS","Trebuchet MS",sans-serif;
+  font-size:clamp(.6rem,1.5vw,.78rem);font-weight:bold;color:#0f172a;
+  max-width:160px;min-width:80px;text-align:center;
+  pointer-events:none;position:relative;
+  opacity:0;transform:translateY(-6px) scale(.88);
+  transition:opacity .38s,transform .38s cubic-bezier(.34,1.56,.64,1);
+  margin-bottom:4px;
+}
+#fixed-bubble::after{
+  content:"";position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);
+  border-left:10px solid transparent;border-right:10px solid transparent;
+  border-top:14px solid #0f172a;
+}
+#fixed-bubble::before{
+  content:"";position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);
+  border-left:8px solid transparent;border-right:8px solid transparent;
+  border-top:11px solid var(--bc);z-index:1;
+}
+#fixed-bubble.show{opacity:1;transform:translateY(0) scale(1);}
+#fixed-robot-name{
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(.6rem,1.3vw,.72rem);
+  color:#ffd35a;
+  text-shadow:0 1px 6px rgba(0,0,0,.8),0 0 10px rgba(214,40,57,.4);
+  text-align:center;line-height:1.2;
+}
+
+/* ═══ WIN OVERLAY ═══ */
+#winOverlay{
+  position:fixed;inset:0;z-index:700;
+  display:none;
+  align-items:center;justify-content:center;
+  background:rgba(4,12,8,.88);
+  padding:1rem;overflow-y:auto;
+}
+#winOverlay.active{display:flex;}
+.win-card{
+  width:min(480px,94vw);
+  background:linear-gradient(135deg,#0b2418,#123a2a);
+  border-radius:16px;
+  box-shadow:0 0 0 3px #d62839,0 0 0 5px #ffd35a,8px 8px 0 #04100a,0 0 60px rgba(214,40,57,.25);
+  padding:clamp(16px,3vw,28px) clamp(14px,3vw,24px);
+  text-align:center;
+  animation:cardPop .4s cubic-bezier(.34,1.56,.64,1) both;
+}
+.win-trophy{font-size:clamp(44px,10vw,62px);animation:bounce .8s ease-in-out infinite alternate;display:block;margin-bottom:6px;}
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-10px)}}
+.win-title{
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(1.4rem,4.5vw,2rem);
+  color:#ffd35a;text-shadow:0 0 24px rgba(255,211,90,.5);
+  margin-bottom:4px;
+}
+.win-name{font-size:14px;color:#d8ecd9;font-style:italic;margin-bottom:12px;}
+.win-stats{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.win-stat{
+  font-size:13px;color:#f3fbf1;
+  background:rgba(214,40,57,.14);
+  border:1px solid rgba(255,211,90,.18);
+  border-radius:6px;padding:7px 12px;
+  font-weight:800;
+}
+.win-medal{
+  font-size:15px;font-weight:900;color:#ffd35a;
+  background:rgba(255,211,90,.12);
+  border:1px solid rgba(255,211,90,.18);
+  border-radius:6px;padding:8px 12px;
+}
+
+/* ═══ CONFETTI ═══ */
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:5000;overflow:hidden}
+#confetti.hidden{display:none!important}
+#confetti span{position:absolute;top:-10vh;animation:confettiFall linear forwards;will-change:transform}
+@keyframes confettiFall{0%{transform:translateY(-10vh) rotate(0);opacity:1}100%{transform:translateY(120vh) rotate(540deg);opacity:.9}}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:700px){
+  .sidebar{gap:3px;padding:.25rem .15rem;}
+  .word-item{padding:2px 7px;font-size:clamp(.58rem,2.5vw,.72rem);}
+  .robot-wrap{gap:5px;margin-top:3px;padding-top:4px;}
+  .bubble{max-width:160px;min-width:80px;font-size:.65rem;padding:5px 8px 4px;}
+  .robot-name{font-size:.65rem;}
+  .game-header{gap:.2rem;}
+  .timer-box{font-size:.68rem;padding:3px 7px;}
+  .level-bar-game .lvl-btn{padding:.25rem .5rem;font-size:.7rem;}
+  .btn{padding:5px 9px;font-size:.74rem;}
+  #gameScreen{padding-bottom:max(3.5rem, calc(3.5rem + env(safe-area-inset-bottom)));}
+}
+@media(max-width:320px){
+  .bubble{display:none;}
+  .bottom-bar{padding-right:0;}
+  .level-bar .lvl-btn,.level-bar-game .lvl-btn{padding:.22rem .4rem;font-size:.66rem;}
+}
+/* Landscape phone */
+@media(max-height:500px) and (orientation:landscape){
+  #gameScreen{padding-top:.3rem;padding-bottom:2.5rem;}
+  .game-layout{flex-direction:row;max-width:100%;}
+  .sidebar{width:clamp(160px,28vw,220px);flex-direction:column;flex-wrap:nowrap;align-items:flex-start;justify-content:flex-start;}
+  .robot-wrap{flex-direction:column;border-top:1px solid rgba(214,40,57,.2);}
+  .bottom-bar{margin-top:.2rem;}
+}
+
+/* ═══ DICA EDUCATIVA (toast) ═══ */
+.tip-toast{
+  position:fixed;
+  left:50%;bottom:clamp(1.2rem,10vh,6rem);
+  transform:translateX(-50%) translateY(20px);
+  width:min(420px,90vw);
+  background:linear-gradient(135deg,#fffaf0,#fde6d6);
+  border:3px solid #0f172a;outline:2px solid #1e293b;outline-offset:-4px;
+  border-radius:16px;
+  box-shadow:5px 5px 0 #0f172a,0 0 30px rgba(255,211,90,.3);
+  padding:12px 16px;
+  font-family:"Comic Sans MS","Trebuchet MS",sans-serif;
+  font-weight:bold;color:#0e2a1f;
+  font-size:clamp(.78rem,2.2vw,.92rem);
+  line-height:1.4;text-align:center;
+  z-index:640;
+  opacity:0;pointer-events:none;
+  transition:opacity .35s,transform .35s cubic-bezier(.34,1.56,.64,1);
+}
+.tip-toast::before{
+  content:'📚 Sabias que...';
+  display:block;
+  font-family:'Fredoka One',cursive;
+  font-size:.72rem;color:#d62839;
+  margin-bottom:4px;letter-spacing:.3px;
+}
+.tip-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+@media(max-width:700px){
+  .tip-toast{bottom:5.2rem;padding:9px 12px;}
+}
+
+/* ═══ RESUMO DE DICAS NO ECRÃ DE VITÓRIA ═══ */
+.win-tips{
+  text-align:left;
+  background:rgba(255,211,90,.08);
+  border:1px solid rgba(255,211,90,.25);
+  border-radius:10px;
+  padding:10px 12px;
+  margin-bottom:14px;
+  max-height:180px;overflow-y:auto;
+}
+.win-tips-title{
+  font-family:'Fredoka One',cursive;
+  font-size:.85rem;color:#ffd35a;
+  text-align:center;margin-bottom:8px;
+}
+.win-tip-item{
+  font-size:.78rem;color:#f3fbf1;
+  padding:5px 0;
+  border-bottom:1px dashed rgba(255,211,90,.2);
+  line-height:1.4;
+}
+.win-tip-item:last-child{border-bottom:none;}
+
+/* ═══ CRONÓMETRO ═══ */
+.timer-box{
+  font-family:'Baloo 2',sans-serif;font-weight:900;font-size:.78rem;
+  color:#ffd35a;background:rgba(214,40,57,.08);
+  border:2px solid rgba(255,211,90,.35);border-radius:8px;
+  padding:4px 10px;display:flex;align-items:center;gap:4px;
+  white-space:nowrap;
+}
+#timer-box.record-beat{color:#4ecb71;border-color:#4ecb71;animation:recordPulse .6s ease-in-out 2;}
+#timer-box.record-warn{color:#ff6b9d;border-color:#ff6b9d;}
+@keyframes recordPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+
+/* ═══ FULLSCREEN / MUTE BUTTON ═══ */
+#btn-fullscreen,#btn-mute,#btn-colorblind{
+  background:rgba(214,40,57,.08);
+  border:2px solid rgba(255,211,90,.35);
+  border-radius:8px;
+  color:#ffd35a;
+  cursor:pointer;
+  width:30px;height:30px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;
+  padding:0;
+  flex-shrink:0;
+  transition:background .15s,border-color .15s,transform .1s;
+  line-height:1;
+}
+#btn-fullscreen:hover,#btn-mute:hover,#btn-colorblind:hover{background:rgba(214,40,57,.2);border-color:#ffd35a;transform:scale(1.08);}
+#btn-fullscreen:active,#btn-mute:active,#btn-colorblind:active{transform:scale(.95);}
+#btn-colorblind.active{background:#ffd35a;border-color:#ffd35a;color:#07170f;}
+
+/* ═══ FULLSCREEN MODE TWEAKS ═══ */
+:fullscreen #gameScreen,
+:-webkit-full-screen #gameScreen,
+:-moz-full-screen #gameScreen{
+  height:100vh;overflow-y:auto;
+}
+:fullscreen body,
+:-webkit-full-screen body,
+:-moz-full-screen body{
+  background:#0e2a1f;
+}
+
+/* ═══ BETTER PC RESPONSIVE ═══ */
+/* Medium screens: slightly reduce sidebar */
+@media(min-width:701px) and (max-width:900px){
+  .sidebar{min-width:130px;max-width:180px;}
+  .word-item{font-size:.72rem;padding:3px 8px;}
+  .game-layout{gap:8px;}
+}
+/* Large screens: more generous layout */
+@media(min-width:1200px){
+  #gameScreen{padding-left:1.5rem;padding-right:1.5rem;}
+  .sidebar{min-width:200px;max-width:260px;}
+  .word-item{font-size:.85rem;}
+}
+/* Very large screens */
+@media(min-width:1600px){
+  .sidebar{min-width:220px;max-width:280px;}
+  .word-item{font-size:.9rem;padding:5px 12px;}
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   PC RESPONSIVE SCALE SYSTEM — reference 1920×1080
+   This stage is now gated by the JS-controlled "desktop-stage" class on
+   <html> instead of a plain width media query. A real smartphone turned
+   sideways is often wider than 700px, so a width-only check used to
+   misclassify it as "desktop" and squeeze the whole game into a tiny
+   letterboxed rectangle. JS (see the applyScale script below) decides
+   "desktop-stage" using touch/screen-size detection, so phones — in any
+   orientation — stay in the normal, full-screen responsive layout, and
+   only real desktops/large screens get the fixed 1920×1080 scaled stage.
+   ════════════════════════════════════════════════════════════════════ */
+#scale-wrap{width:100%;}
+
+html.desktop-stage,html.desktop-stage body{
+  width:100vw;height:100vh;height:100dvh;
+  overflow:hidden;
+  margin:0;
+  background:#050f0a;
+}
+html.desktop-stage #scale-wrap{
+  position:absolute;
+  top:0;left:0;
+  width:1920px;
+  height:1080px;
+  transform-origin:top left;
+  transform:scale(1);
+  will-change:transform;
+}
+/* Inside scaled stage, screens must fill the 1080px height,
+   NOT the actual viewport (which can be smaller). */
+html.desktop-stage #scale-wrap .screen{
+  min-height:1080px!important;
+  max-height:1080px;
+  height:1080px;
+}
+html.desktop-stage #scale-wrap #gameScreen{
+  overflow-y:auto;
+}
+/* Overlays cover the stage, not the raw viewport */
+html.desktop-stage #scale-wrap #winOverlay,
+html.desktop-stage #scale-wrap #confetti,
+html.desktop-stage #scale-wrap .overlay,
+html.desktop-stage #scale-wrap .modal-overlay{
+  position:absolute;
+  inset:0;
+}
+
+/* ── PHONE IN LANDSCAPE: make sure the game truly fills the screen ──
+   Wins over the generic ">700px" sidebar/word tweaks further up because
+   it is declared later in the stylesheet (same specificity). */
+@media(max-height:520px) and (orientation:landscape){
+  html:not(.desktop-stage) #gameScreen{
+    padding-top:.25rem;padding-bottom:.25rem;
+    padding-left:.4rem;padding-right:.4rem;
+    height:100vh;height:100dvh;
+    overflow-y:auto;
+  }
+  html:not(.desktop-stage) .game-header{margin-bottom:.15rem;}
+  html:not(.desktop-stage) .game-layout{
+    flex-direction:row;
+    align-items:stretch;
+    max-width:100%;
+    height:auto;
+  }
+  html:not(.desktop-stage) #grid-wrap{
+    flex:1 1 auto;
+    align-items:flex-start;
+  }
+  html:not(.desktop-stage) .sidebar{
+    width:clamp(140px,26vw,210px);
+    max-width:210px;
+    flex:0 0 auto;
+    flex-direction:column;
+    flex-wrap:nowrap;
+    align-items:flex-start;
+    justify-content:flex-start;
+    max-height:100%;
+    overflow-y:auto;
+  }
+  html:not(.desktop-stage) .words-zone{flex-direction:column;flex-wrap:nowrap;}
+  html:not(.desktop-stage) #word-list{flex-direction:column!important;flex-wrap:nowrap!important;}
+  html:not(.desktop-stage) .progress-wrap,
+  html:not(.desktop-stage) #score,
+  html:not(.desktop-stage) .lvl-desc,
+  html:not(.desktop-stage) #recordDisplay{display:none;}
+}
+
+/* ═══ NEVE ═══ */
+#snow{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:3}
+#snow span{position:absolute;top:-8vh;color:#fff;opacity:.55;animation:snowFall linear infinite;will-change:transform}
+@keyframes snowFall{0%{transform:translate(0,-8vh) rotate(0)}50%{transform:translate(24px,55vh) rotate(180deg)}100%{transform:translate(-12px,112vh) rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){#snow{display:none}}
+html.desktop-stage #scale-wrap #snow{height:1080px}
+
+/* ═══ ROBÔ A CELEBRAR (ecrã final) ═══ */
+.win-robot{width:clamp(76px,16vw,108px);height:auto;display:block;margin:0 auto 6px;animation:vbWinBounce .8s ease-in-out infinite alternate;filter:drop-shadow(0 0 12px #7dd3fc)}
+@keyframes vbWinBounce{from{transform:translateY(0)}to{transform:translateY(-10px)}}
+</style>
+</head>
+<body lang="pt-PT">
+<div id="scale-wrap">
+<div id="snow" aria-hidden="true"></div>
+
+<!-- ═══ HEADER ═══ -->
+
+
+
+<!-- ═══ ECRÃ INICIAL ═══ -->
+<div id="startScreen" class="screen active">
+  <div class="modal-card">
+    <div class="modal-title">🎄 Sopa de Letras<br>de Natal</div>
+    <div class="name-row">
+      <label for="playerName">O teu nome:</label>
+      <input type="text" id="playerName" maxlength="22" placeholder="Escreve o teu nome…" autocomplete="off" lang="pt-PT" spellcheck="true" inputmode="text">
+    </div>
+    <div class="level-bar">
+      <button class="lvl-btn easy active" data-level="easy">⭐ Fácil</button>
+      <button class="lvl-btn medium" data-level="medium">⭐⭐ Médio</button>
+      <button class="lvl-btn hard" data-level="hard">⭐⭐⭐ Difícil</button>
+    </div>
+    <p class="lvl-desc" id="startLvlDesc">Grelha 10×10 · horizontal e vertical · 7 palavras</p>
+    <p class="tiny" style="margin-top:-4px;">🎄 Tema: a magia do Natal</p>
+    <div class="row">
+      <button id="btnStart" class="btn primary">▶ Começar a jogar!</button>
+    </div>
+    <p class="tiny">PC: clica e arrasta · Tablet/telemóvel: toca e arrasta</p>
+  </div>
+</div>
+
+<!-- ═══ ECRÃ DE JOGO ═══ -->
+<div id="gameScreen" class="screen">
+  <div class="game-header">
+    <div class="level-bar level-bar-game">
+      <button class="lvl-btn easy" data-level="easy">⭐ Fácil</button>
+      <button class="lvl-btn medium" data-level="medium">⭐⭐ Médio</button>
+      <button class="lvl-btn hard" data-level="hard">⭐⭐⭐ Difícil</button>
+    </div>
+    <div class="header-actions">
+      <div class="timer-box" id="timer-box" title="Tempo de jogo">⏱️ <span id="timer-display">00:00</span></div>
+      <button class="btn btn-sm" id="btn-hint">💡 Dica (<span id="hints-left">3</span>)</button>
+      <button class="btn btn-sm primary" id="btn-restart">↺ Novo Jogo</button>
+      <button class="btn btn-sm" id="btn-menu">🏠 Menu</button>
+      <button id="btn-mute" title="Silenciar som">🔊</button>
+      <button id="btn-colorblind" title="Modo daltónico (mostra números nas palavras)">🎨</button>
+      <button id="btn-fullscreen" title="Ecrã inteiro">⛶</button>
+    </div>
+  </div>
+  <p class="lvl-desc" id="gameLvlDesc" style="width:100%;max-width:1100px;margin:0 auto .15rem;"></p>
+  <p class="tiny" id="recordDisplay" style="width:100%;max-width:1100px;margin:0 auto .2rem;"></p>
+  <div class="progress-wrap"><div class="progress-bar" id="pbar" style="width:0%"></div></div>
+  <div id="msg" role="status" aria-live="polite"></div>
+  <div id="score"></div>
+  <div id="tipToast" class="tip-toast" role="status" aria-live="polite"></div>
+  <div class="game-layout" id="game-layout">
+    <div id="grid-wrap">
+      <p id="grid-instructions" class="sr-only">Grelha de sopa de letras. Usa as setas do teclado para navegar entre as letras. Prime Enter ou espaço para começar a selecionar uma palavra, continua com as setas até à última letra e prime Enter ou espaço outra vez para confirmar. Prime Esc para cancelar a seleção.</p>
+      <div id="grid" role="grid" aria-label="Grelha de sopa de letras" aria-describedby="grid-instructions"></div>
+    </div>
+    <div class="sidebar">
+      <div class="words-zone">
+        <div class="words-title">📋 Palavras:</div>
+        <div id="word-list" style="display:flex;flex-direction:column;gap:4px;align-items:stretch;width:100%;"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══ VITÓRIA ═══ -->
+<div id="winOverlay">
+  <div class="win-card">
+    <canvas id="win-robot" class="win-robot" width="96" height="96" aria-hidden="true"></canvas>
+    <div class="win-title">Feliz Natal!</div>
+    <p class="win-name">Parabéns, <strong id="winName" style="color:#ffd35a;font-style:normal">Amigo</strong>! Ajudaste o Pai Natal a encontrar tudo!</p>
+    <div class="win-stats">
+      <div class="win-stat">⭐ Palavras encontradas: <strong id="winFound">0</strong></div>
+      <div class="win-stat" id="winTime">⏱️ Tempo: <strong>00:00</strong></div>
+      <div class="win-stat">🎮 Nível: <strong id="winLevel">—</strong></div>
+      <div class="win-medal" id="winMedal">🥇 Excelente!</div>
+    </div>
+    <div class="win-tips" id="winTips">
+      <div class="win-tips-title">📚 O que aprendeste hoje:</div>
+      <div id="winTipsList"></div>
+    </div>
+    <div class="row">
+      <button id="btnWinRestart" class="btn primary">🔄 Jogar de novo</button>
+      <button id="btnWinMenu" class="btn">🏠 Menu</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ROBOT FLUTUANTE FIXO ═══ -->
+<div id="fixed-robot-wrap">
+  <div id="fixed-bubble" role="status" aria-live="polite" class="">Ho ho ho! Sou o VanBerto's! Vamos descobrir o Natal! 🎄</div>
+  <canvas id="fixed-vb-robot" width="96" height="96" role="button" tabindex="0" aria-label="VanBerto's — clica para falar"></canvas>
+  <div id="fixed-robot-name">👤 Amigo</div>
+</div>
+
+<!-- ═══ CONFETTI ═══ -->
+<div id="prof-tag">© Prof.ª Vanda Várzea</div>
+
+<div id="confetti" class="hidden" aria-hidden="true"></div>
+
+</div><!-- end #scale-wrap -->
+
+<script>
+'use strict';
+
+/* ════════════════════════════════════════════════════════════════════
+   PC RESPONSIVE SCALE SYSTEM
+   Reference resolution: 1920 × 1080
+   Scale factor: Math.min(window.innerWidth / 1920, window.innerHeight / 1080)
+   - Applied ONLY on desktop (window.innerWidth > 700).
+   - Mobile/tablet small (≤700px) keep original responsive layout intact.
+   - Re-computes on every window resize event.
+   - Centers the scaled stage with letterbox.
+   ════════════════════════════════════════════════════════════════════ */
+(function(){
+  const MOBILE_BP = 700;
+  const REF_W = 1920;
+  const REF_H = 1080;
+  // Longest physical screen side (doesn't change when the phone rotates,
+  // since screen.width/height swap together) above which we assume a
+  // "real" tablet/desktop rather than a phone.
+  const PHONE_MAX_LONG_SIDE = 960;
+
+  function isPhoneDevice(){
+    const touch = ('ontouchstart' in window) || (navigator.maxTouchPoints||0) > 0;
+    if(!touch) return false;
+    const longSide = Math.max(window.screen.width||0, window.screen.height||0);
+    return longSide > 0 && longSide <= PHONE_MAX_LONG_SIDE;
+  }
+
+  // Desktop stage only for non-phone devices with a wide-enough viewport.
+  // A phone turned sideways can easily be wider than 700px, but it must
+  // still get the normal full-screen mobile layout, not the tiny scaled
+  // 1920×1080 stage meant for real desktop/laptop screens.
+  function shouldUseDesktopStage(){
+    return !isPhoneDevice() && window.innerWidth > MOBILE_BP;
+  }
+
+  function applyScale(){
+    const wrap = document.getElementById('scale-wrap');
+    if(!wrap) return;
+    const iw = window.innerWidth;
+    const ih = window.innerHeight;
+    const desktop = shouldUseDesktopStage();
+    document.documentElement.classList.toggle('desktop-stage', desktop);
+
+    if(!desktop){
+      wrap.style.transform = '';
+      wrap.style.transformOrigin = '';
+      document.documentElement.style.setProperty('--game-scale', 1);
+      return;
+    }
+
+    const scale = Math.min(iw / REF_W, ih / REF_H);
+    const offsetX = Math.max(0, (iw - REF_W * scale) / 2);
+    const offsetY = Math.max(0, (ih - REF_H * scale) / 2);
+    wrap.style.transformOrigin = 'top left';
+    wrap.style.transform =
+      'translate(' + offsetX + 'px,' + offsetY + 'px) scale(' + scale + ')';
+    document.documentElement.style.setProperty('--game-scale', scale);
+  }
+
+  let rafId = null;
+  function onResize(){
+    if(rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(applyScale);
+  }
+  window.addEventListener('resize', onResize);
+  window.addEventListener('orientationchange', onResize);
+
+  applyScale();
+  window.addEventListener('load', applyScale);
+  document.addEventListener('DOMContentLoaded', applyScale);
+
+  window.isPhoneDevice = isPhoneDevice;
+})();
+
+/* Shared helper: are we in the normal full-screen "mobile" flow
+   (phones in any orientation, and narrow desktop browser windows),
+   as opposed to the scaled 1920×1080 desktop stage? */
+function isMobileFlow(){
+  return !document.documentElement.classList.contains('desktop-stage');
+}
+
+/* ── DATA ── */
+const LEVELS={
+  easy:{
+    size:10,
+    words:['NATAL','PRENDA','NEVE','ESTRELA','SINO','RENA','LAREIRA'],
+    dirs:[[0,1],[1,0],[0,-1],[-1,0]],
+    label:'Grelha 10×10 · horizontal e vertical · 7 palavras',
+    hints:3,
+    medals:['🥇 Excelente!','🥈 Muito bem!','🥉 Continue a tentar!']
+  },
+  medium:{
+    size:13,
+    words:['PRESÉPIO','CONSOADA','BACALHAU','BOLOREI','ÁRVORE','MEIAS','LUZES','TRENÓ','DUENDE','PRESENTES'],
+    dirs:[[0,1],[1,0],[1,1],[-1,1],[0,-1],[-1,0]],
+    label:'Grelha 13×13 · diagonais incluídas · 10 palavras',
+    hints:3,
+    medals:['🥇 Excelente!','🥈 Muito bem!','🥉 Continue a tentar!']
+  },
+  hard:{
+    size:16,
+    words:['MISSADOGALO','RABANADAS','GUIRLANDA','CHAMINÉ','FAMÍLIA','ENFEITES','CÂNTICOS','FELICIDADE','AGASALHO','SURPRESA','ALEGRIA','CARTAS','VISCO'],
+    dirs:[[0,1],[1,0],[1,1],[-1,1],[0,-1],[-1,0],[-1,-1],[1,-1]],
+    label:'Grelha 16×16 · todas as direções + invertidas · 13 palavras',
+    hints:3,
+    medals:['🥇 Excelente!','🥈 Muito bem!','🥉 Não desistas!']
+  }
+};
+const CHX=['#ff6b9d','#36b5f5','#4ecb71','#ff9f43','#a29bfe','#fd79a8','#00cec9','#ffd35a','#d62839','#6c5ce7','#00b894','#e17055','#b8860b'];
+
+/* ── DICAS EDUCATIVAS DE CIBERSEGURANÇA ── */
+const TIPS={
+  'NATAL':'🎄 O Natal celebra-se a 25 de dezembro e é um tempo de partilha, família e amizade.',
+  'PRENDA':'🎁 Em Portugal, as prendas costumam ser abertas à meia-noite de 24 para 25 de dezembro, ou na manhã de Natal.',
+  'NEVE':'❄️ Cada floco de neve tem uma forma única — não há dois iguais!',
+  'ESTRELA':'⭐ A estrela no topo da árvore lembra a estrela que guiou os Reis Magos até Belém.',
+  'SINO':'🔔 Os sinos tocam no Natal para anunciar a alegria e chamar todos para a festa.',
+  'RENA':'🦌 As renas puxam o trenó do Pai Natal e, segundo a lenda, conseguem voar!',
+  'LAREIRA':'🔥 Na noite de Natal, a lareira aquece a família e, dizem, é por lá que o Pai Natal entra.',
+  'PRESÉPIO':'⛪ O primeiro presépio foi feito por São Francisco de Assis, em 1223, em Greccio.',
+  'CONSOADA':'🍽️ A consoada é a ceia de Natal em família, na noite de 24 de dezembro.',
+  'BACALHAU':'🐟 O bacalhau cozido com batatas e couves é o prato mais típico da consoada portuguesa.',
+  'BOLOREI':'🎂 O bolo-rei tem uma fava escondida: quem a encontrar paga o bolo-rei do ano seguinte!',
+  'ÁRVORE':'🌲 A tradição da árvore de Natal veio da Alemanha, há mais de 500 anos.',
+  'MEIAS':'🧦 Há crianças que penduram meias junto à lareira, para o Pai Natal as encher de surpresas.',
+  'LUZES':'💡 As luzes de Natal lembram que a luz vence a escuridão do inverno.',
+  'TRENÓ':'🛷 O trenó do Pai Natal é puxado por renas e viaja pelo mundo inteiro numa só noite.',
+  'DUENDE':'🧝 Os duendes são os ajudantes do Pai Natal e fabricam os brinquedos na oficina.',
+  'PRESENTES':'🎀 O melhor presente é o tempo passado com quem gostamos — e um abraço não custa nada!',
+  'MISSADOGALO':'⛪ A Missa do Galo celebra-se à meia-noite de 24 de dezembro, para receber o Natal.',
+  'RABANADAS':'🍞 As rabanadas são feitas com pão embebido em leite, fritas e polvilhadas com açúcar e canela.',
+  'GUIRLANDA':'🌿 A guirlanda na porta é um símbolo de boas-vindas e de amizade durante o Natal.',
+  'CHAMINÉ':'🏠 Diz a lenda que o Pai Natal desce pela chaminé para deixar as prendas.',
+  'FAMÍLIA':'👨‍👩‍👧‍👦 O Natal é, acima de tudo, um tempo para estar com a família.',
+  'ENFEITES':'🎨 Enfeitar a árvore em família é uma das tradições mais divertidas do Natal.',
+  'CÂNTICOS':'🎶 Os cânticos de Natal, como o "Noite Feliz", cantam-se há mais de 200 anos.',
+  'FELICIDADE':'😊 A verdadeira felicidade do Natal está em dar e partilhar com os outros.',
+  'AGASALHO':'🧣 No inverno, um bom agasalho mantém-nos quentinhos — e podemos doar os que já não usamos.',
+  'SURPRESA':'🎉 Uma surpresa feita com carinho vale mais do que qualquer prenda cara.',
+  'ALEGRIA':'🎅 O Pai Natal espalha alegria — e tu também podes fazer um amigo sorrir hoje!',
+  'CARTAS':'✉️ Muitas crianças escrevem cartas ao Pai Natal a pedir prendas e a agradecer.',
+  'VISCO':'🌱 Diz a tradição que quem se encontra debaixo de um ramo de visco recebe um beijo de boa sorte.'
+};
+let tipsAprendidas=[];
+
+/* ── SONS ── */
+let audioCtx=null;
+let muted=false;
+try{muted=localStorage.getItem('vb_muted')==='1';}catch(e){}
+function getAC(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
+function playWordFound(){
+  if(muted)return;
+  try{
+    const ac=getAC();
+    // Acorde alegre: três notas em sequência rápida
+    [[523.25,0],[659.25,.08],[783.99,.16]].forEach(([freq,delay])=>{
+      const o=ac.createOscillator(),g=ac.createGain();
+      o.connect(g);g.connect(ac.destination);
+      o.type='sine';o.frequency.value=freq;
+      const t=ac.currentTime+delay;
+      g.gain.setValueAtTime(0,t);
+      g.gain.linearRampToValueAtTime(.28,t+.02);
+      g.gain.exponentialRampToValueAtTime(.001,t+.32);
+      o.start(t);o.stop(t+.35);
+    });
+  }catch(e){}
+}
+function playWin(){
+  if(muted)return;
+  try{
+    const ac=getAC();
+    // Fanfarra vitória
+    [[523.25,0,.18],[659.25,.18,.18],[783.99,.36,.18],[1046.5,.54,.35]].forEach(([freq,delay,dur])=>{
+      const o=ac.createOscillator(),g=ac.createGain();
+      o.connect(g);g.connect(ac.destination);
+      o.type='triangle';o.frequency.value=freq;
+      const t=ac.currentTime+delay;
+      g.gain.setValueAtTime(0,t);
+      g.gain.linearRampToValueAtTime(.32,t+.03);
+      g.gain.exponentialRampToValueAtTime(.001,t+dur);
+      o.start(t);o.stop(t+dur+.05);
+    });
+  }catch(e){}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   VANBERTO'S — desenho fiel ao robô do jogo "Missão Cibersegurança"
+   (código de desenho portado tal-e-qual do textures.js original,
+   adaptado de um canvas do Phaser para um <canvas> HTML simples)
+   ═══════════════════════════════════════════════════════════ */
+function rrVan(ctx,x,y,w,h,r){
+  const rr=Math.min(r,w/2,h/2);
+  ctx.beginPath();ctx.moveTo(x+rr,y);ctx.arcTo(x+w,y,x+w,y+h,rr);ctx.arcTo(x+w,y+h,x,y+h,rr);ctx.arcTo(x,y+h,x,y,rr);ctx.arcTo(x,y,x+w,y,rr);ctx.closePath();
+}
+function cfVan(ctx,x,y,r,color){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();}
+
+function drawVanBerto(ctx,blink,step,armsUp){
+  const w=96,h=96;
+  ctx.clearRect(0,0,w,h);
+  ctx.lineJoin="round"; ctx.lineCap="round";
+  ctx.save(); ctx.translate(0,6);
+  const NAVY="#16233e", NAVY2="#26365a", OUT="#101a30";
+  function white(x0,y0,x1,y1){const g=ctx.createLinearGradient(x0,y0,x1,y1);g.addColorStop(0,"#ffffff");g.addColorStop(0.55,"#e6edf7");g.addColorStop(1,"#b4c4dc");return g;}
+
+  const LIFT=8, STRIDE=3;
+  let lTop=70, rTop=70, lDX=0, rDX=0;
+  if(step===0){ lTop=70-LIFT; lDX=STRIDE; rDX=-STRIDE; }
+  else if(step===1){ rTop=70-LIFT; rDX=STRIDE; lDX=-STRIDE; }
+  function leg(cx,top){
+    rrVan(ctx,cx-5,top,10,11,4.5); ctx.fillStyle=white(cx-5,top,cx+5,top); ctx.fill();
+    ctx.lineWidth=2.6; ctx.strokeStyle=OUT; ctx.stroke();
+    const fy=top+9;
+    rrVan(ctx,cx-6.5,fy,13,9,4); ctx.fillStyle=NAVY; ctx.fill();
+    ctx.lineWidth=2.6; ctx.strokeStyle=OUT; ctx.stroke();
+    rrVan(ctx,cx-6.5,fy+2,13,2.4,1.2); ctx.fillStyle="rgba(255,255,255,0.85)"; ctx.fill();
+    cfVan(ctx,cx-2.5,fy+4.5,1.4,"rgba(255,255,255,0.5)");
+  }
+  leg(41+lDX,lTop); leg(55+rDX,rTop);
+
+  const ARM_SWING = 0.24;
+  const JUMP_RAISE = 2.9;
+  let lArmSwing = 0, rArmSwing = 0;
+  if(armsUp){ lArmSwing = JUMP_RAISE; rArmSwing = -JUMP_RAISE; }
+  else if(step===0){ lArmSwing=-ARM_SWING; rArmSwing=ARM_SWING; }
+  else if(step===1){ lArmSwing=ARM_SWING; rArmSwing=-ARM_SWING; }
+  function arm(sx,swing){
+    ctx.save();
+    const px=sx+4.5, py=52;
+    ctx.translate(px,py); ctx.rotate(swing); ctx.translate(-px,-py);
+    rrVan(ctx,sx,52,9,13,4.5); ctx.fillStyle=white(sx,52,sx+9,52); ctx.fill();
+    ctx.lineWidth=2.6; ctx.strokeStyle=OUT; ctx.stroke();
+    const hx=sx+4.5, hy=67;
+    cfVan(ctx,hx,hy,5,NAVY);
+    ctx.lineWidth=2.3; ctx.strokeStyle=OUT; ctx.beginPath(); ctx.arc(hx,hy,5,0,Math.PI*2); ctx.stroke();
+    cfVan(ctx,hx-2,hy+1.6,1.4,NAVY2); cfVan(ctx,hx+0.5,hy+2.4,1.4,NAVY2); cfVan(ctx,hx+2.5,hy+1.6,1.4,NAVY2);
+    ctx.restore();
+  }
+  arm(17,lArmSwing); arm(70,rArmSwing);
+
+  rrVan(ctx,26,44,44,32,15); ctx.fillStyle=white(28,46,68,46); ctx.fill();
+  ctx.save(); rrVan(ctx,26,44,44,32,15); ctx.clip();
+  const wg=ctx.createLinearGradient(0,64,0,76); wg.addColorStop(0,"rgba(22,35,62,0)"); wg.addColorStop(0.4,"#1c2c4c"); wg.addColorStop(1,"#142038");
+  ctx.fillStyle=wg; ctx.fillRect(26,62,44,16);
+  ctx.strokeStyle="rgba(16,26,48,0.6)"; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(28,64); ctx.lineTo(68,64); ctx.stroke();
+  ctx.fillStyle="rgba(255,255,255,0.5)"; ctx.beginPath(); ctx.ellipse(36,52,9,5.5,-0.5,0,Math.PI*2); ctx.fill();
+  ctx.restore();
+  ctx.lineWidth=3; ctx.strokeStyle=OUT; rrVan(ctx,26,44,44,32,15); ctx.stroke();
+
+  cfVan(ctx,48,56,8,NAVY);
+  ctx.lineWidth=2.5; ctx.strokeStyle=OUT; ctx.beginPath(); ctx.arc(48,56,8,0,Math.PI*2); ctx.stroke();
+  const dome=ctx.createRadialGradient(45.5,53.5,1,48,56,7); dome.addColorStop(0,"#aebccf"); dome.addColorStop(0.6,"#5a6a85"); dome.addColorStop(1,"#2b3a57");
+  ctx.fillStyle=dome; ctx.beginPath(); ctx.arc(48,56,5.7,0,Math.PI*2); ctx.fill();
+  cfVan(ctx,46,53.8,1.5,"rgba(255,255,255,0.85)");
+
+  function pod(cx){
+    cfVan(ctx,cx,32,6,NAVY);
+    ctx.lineWidth=2.3; ctx.strokeStyle=OUT; ctx.beginPath(); ctx.arc(cx,32,6,0,Math.PI*2); ctx.stroke();
+    cfVan(ctx,cx,32,2.8,NAVY2); cfVan(ctx,cx-0.8,31,1,"rgba(255,255,255,0.6)");
+  }
+  pod(25); pod(71);
+
+  ctx.fillStyle=NAVY; ctx.beginPath(); ctx.moveTo(45,16); ctx.lineTo(51,16); ctx.lineTo(49.2,8); ctx.lineTo(46.8,8); ctx.closePath(); ctx.fill();
+  const halo=ctx.createRadialGradient(48,5,1,48,5,11); halo.addColorStop(0,"rgba(90,200,255,0.55)"); halo.addColorStop(1,"rgba(90,200,255,0)");
+  ctx.fillStyle=halo; ctx.beginPath(); ctx.arc(48,5,11,0,Math.PI*2); ctx.fill();
+  const bg=ctx.createRadialGradient(46.3,3.5,0.5,48,5,5.5); bg.addColorStop(0,"#e6f7ff"); bg.addColorStop(0.4,"#48b4ff"); bg.addColorStop(1,"#1670d8");
+  ctx.fillStyle=bg; ctx.beginPath(); ctx.arc(48,5,5.5,0,Math.PI*2); ctx.fill();
+  cfVan(ctx,46.2,3.4,1.6,"#ffffff");
+
+  rrVan(ctx,26,14,44,34,17); ctx.fillStyle=white(28,15,68,15); ctx.fill();
+  ctx.lineWidth=3; ctx.strokeStyle=OUT; ctx.stroke();
+  ctx.save(); rrVan(ctx,26,14,44,34,17); ctx.clip();
+  ctx.fillStyle="rgba(255,255,255,0.6)"; ctx.beginPath(); ctx.ellipse(38,19,10,4,-0.5,0,Math.PI*2); ctx.fill(); ctx.restore();
+
+  rrVan(ctx,30,20,36,23,12); ctx.fillStyle=NAVY; ctx.fill();
+  rrVan(ctx,32.5,22,31,19,10);
+  const vg=ctx.createLinearGradient(0,22,0,41); vg.addColorStop(0,"#7fd4ff"); vg.addColorStop(0.5,"#2a9bf0"); vg.addColorStop(1,"#1366c6");
+  ctx.fillStyle=vg; ctx.fill();
+  ctx.save(); rrVan(ctx,32.5,22,31,19,10); ctx.clip();
+  ctx.fillStyle="rgba(255,255,255,0.45)"; ctx.beginPath(); ctx.ellipse(42,25,9,3.5,-0.4,0,Math.PI*2); ctx.fill(); ctx.restore();
+
+  if(!blink){
+    ctx.fillStyle="#0a0f1c";
+    ctx.beginPath(); ctx.ellipse(41,30,3.3,4,0,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(55,30,3.3,4,0,0,Math.PI*2); ctx.fill();
+    cfVan(ctx,42.3,28.4,1.5,"#fff"); cfVan(ctx,39.9,31,0.8,"#fff");
+    cfVan(ctx,56.3,28.4,1.5,"#fff"); cfVan(ctx,53.9,31,0.8,"#fff");
+  } else if(blink==="wink"){
+    ctx.fillStyle="#0a0f1c";
+    ctx.beginPath(); ctx.ellipse(41,30,3.3,4,0,0,Math.PI*2); ctx.fill();
+    cfVan(ctx,42.3,28.4,1.5,"#fff"); cfVan(ctx,39.9,31,0.8,"#fff");
+    ctx.lineWidth=3; ctx.strokeStyle="#0a0f1c"; ctx.lineCap="round";
+    ctx.beginPath(); ctx.arc(55,31,3.5,0.15*Math.PI,0.85*Math.PI); ctx.stroke();
+  } else if(blink==="happy"){
+    ctx.lineWidth=3.2; ctx.strokeStyle="#0a0f1c"; ctx.lineCap="round";
+    ctx.beginPath(); ctx.arc(41,31,3.9,0.10*Math.PI,0.90*Math.PI); ctx.stroke();
+    ctx.beginPath(); ctx.arc(55,31,3.9,0.10*Math.PI,0.90*Math.PI); ctx.stroke();
+    cfVan(ctx,33.5,35.5,3,"rgba(255,120,120,0.55)");
+    cfVan(ctx,62.5,35.5,3,"rgba(255,120,120,0.55)");
+  } else if(blink==="sad"){
+    ctx.strokeStyle="#0a0f1c"; ctx.lineWidth=2.3; ctx.lineCap="round";
+    ctx.beginPath(); ctx.moveTo(37,24); ctx.lineTo(44.5,27); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(59,24); ctx.lineTo(51.5,27); ctx.stroke();
+    ctx.fillStyle="#0a0f1c";
+    ctx.beginPath(); ctx.ellipse(41,32,2.8,3.1,0,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(55,32,2.8,3.1,0,0,Math.PI*2); ctx.fill();
+    cfVan(ctx,42,30.7,1.1,"#fff"); cfVan(ctx,56,30.7,1.1,"#fff");
+    ctx.fillStyle="#6fd0ff";
+    ctx.beginPath();
+    ctx.moveTo(56,35); ctx.quadraticCurveTo(59,40,56,43.5); ctx.quadraticCurveTo(53,40,56,35);
+    ctx.closePath(); ctx.fill();
+  } else {
+    ctx.lineWidth=3; ctx.strokeStyle="#0a0f1c";
+    ctx.beginPath(); ctx.arc(41,31,3.5,0.15*Math.PI,0.85*Math.PI); ctx.stroke();
+    ctx.beginPath(); ctx.arc(55,31,3.5,0.15*Math.PI,0.85*Math.PI); ctx.stroke();
+  }
+  ctx.fillStyle="#0a0f1c";
+  if(blink==="wink"){
+    ctx.beginPath(); ctx.ellipse(48,36,5.6,3.6,0,0,Math.PI); ctx.fill();
+    ctx.fillStyle="#ff7a7a";
+    ctx.beginPath(); ctx.ellipse(48,37.6,2.9,1.7,0,0,Math.PI); ctx.fill();
+  } else if(blink==="happy"){
+    ctx.beginPath(); ctx.ellipse(48,36,6.2,4.2,0,0,Math.PI); ctx.fill();
+    ctx.fillStyle="#ff7a7a";
+    ctx.beginPath(); ctx.ellipse(48,38,3.2,1.9,0,0,Math.PI); ctx.fill();
+  } else if(blink==="sad"){
+    ctx.strokeStyle="#0a0f1c"; ctx.lineWidth=2.4; ctx.lineCap="round";
+    ctx.beginPath(); ctx.arc(48,40,4.2,Math.PI,Math.PI*2); ctx.stroke();
+  } else {
+    ctx.beginPath(); ctx.ellipse(48,36,4.6,3.2,0,0,Math.PI); ctx.fill();
+    ctx.fillStyle="#ff7a7a";
+    ctx.beginPath(); ctx.ellipse(48,37.4,2.4,1.5,0,0,Math.PI); ctx.fill();
+  }
+  // gorro de Pai Natal
+  ctx.beginPath(); ctx.moveTo(27,22); ctx.quadraticCurveTo(30,2,56,0); ctx.quadraticCurveTo(67,10,69,22); ctx.closePath();
+  ctx.fillStyle="#d62839"; ctx.fill(); ctx.lineWidth=2.6; ctx.strokeStyle=OUT; ctx.stroke();
+  rrVan(ctx,24,16,48,9,4.5); ctx.fillStyle="#ffffff"; ctx.fill(); ctx.lineWidth=2.6; ctx.strokeStyle=OUT; ctx.stroke();
+  cfVan(ctx,57,0,5.5,"#ffffff"); ctx.lineWidth=2.3; ctx.strokeStyle=OUT; ctx.beginPath(); ctx.arc(57,0,5.5,0,Math.PI*2); ctx.stroke();
+  ctx.restore();
+}
+
+let lvl='easy',grid=[],placed=[],found=[],cells=[],
+    selecting=false,startCell=null,selLine=[],
+    hintsLeft=3,playerName='Amigo do Natal',startSel='easy';
+/* dicas limitadas por sessão (não por partida): reiniciar o mesmo nível não volta a dar dicas */
+const hintsSession={};
+
+/* ── CRONÓMETRO E RECORDES ── */
+let timerInterval=null,timerSeconds=0;
+function fmtTime(sec){
+  const m=Math.floor(sec/60),s=sec%60;
+  return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+function startTimer(){
+  stopTimer();
+  timerSeconds=0;
+  const disp=document.getElementById('timer-display');
+  if(disp)disp.textContent=fmtTime(0);
+  const tbox=document.getElementById('timer-box');
+  tbox && tbox.classList.remove('record-beat','record-warn');
+  timerInterval=setInterval(()=>{
+    timerSeconds++;
+    if(disp)disp.textContent=fmtTime(timerSeconds);
+    updateLiveRecordHint();
+  },1000);
+}
+/* enquanto se joga, mostra quanto falta para bater o recorde deste nível */
+function updateLiveRecordHint(){
+  const el=document.getElementById('recordDisplay');
+  if(!el)return;
+  const rec=getRecord(lvl),tbox=document.getElementById('timer-box');
+  if(rec==null)return;
+  const remaining=rec-timerSeconds;
+  if(remaining>0){
+    el.textContent='🏆 Faltam '+fmtTime(remaining)+' para bateres o teu recorde!';
+    tbox && tbox.classList.remove('record-warn');
+  } else {
+    el.textContent='⏳ Já passaste o teu tempo recorde ('+fmtTime(rec)+') — força, ainda dá para terminar!';
+    tbox && tbox.classList.add('record-warn');
+  }
+}
+function stopTimer(){if(timerInterval){clearInterval(timerInterval);timerInterval=null;}}
+function recordKey(level){return 'vb_natal_record_'+level;}
+function getRecord(level){
+  try{const v=localStorage.getItem(recordKey(level));return v?parseInt(v,10):null;}catch(e){return null;}
+}
+function setRecord(level,sec){
+  try{localStorage.setItem(recordKey(level),String(sec));}catch(e){}
+}
+function updateRecordDisplay(){
+  const el=document.getElementById('recordDisplay');
+  if(!el)return;
+  const rec=getRecord(lvl);
+  el.textContent=rec!=null?('🏆 O teu recorde neste nível: '+fmtTime(rec)):'🏆 Ainda sem recorde neste nível — sê o primeiro!';
+}
+
+/* ── GRID BUILDER ── */
+function initG(s){return Array.from({length:s},()=>Array(s).fill(''));}
+function canP(g,w,r,c,dr,dc,s){
+  for(let i=0;i<w.length;i++){let nr=r+i*dr,nc=c+i*dc;if(nr<0||nr>=s||nc<0||nc>=s)return false;if(g[nr][nc]&&g[nr][nc]!==w[i])return false;}return true;
+}
+function placeW(g,w,dirs,s,maxTries){
+  maxTries=maxTries||500;
+  for(let t=0;t<maxTries;t++){
+    const[dr,dc]=dirs[Math.floor(Math.random()*dirs.length)],
+      r=Math.floor(Math.random()*s),c=Math.floor(Math.random()*s);
+    if(canP(g,w,r,c,dr,dc,s)){
+      const co=[];
+      for(let i=0;i<w.length;i++){g[r+i*dr][c+i*dc]=w[i];co.push([r+i*dr,c+i*dc]);}
+      return co;
+    }
+  }return null;
+}
+// alfabeto normal repetido para ser mais frequente + acentos comuns em palavras do jogo (mais raros, como na escrita real)
+const FILL_LETTERS='ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZÁÃÂÇÉÊÍÓÕÔÚ';
+function fillR(g,s){for(let r=0;r<s;r++)for(let c=0;c<s;c++)if(!g[r][c])g[r][c]=FILL_LETTERS[Math.floor(Math.random()*FILL_LETTERS.length)];}
+
+/* ── CELL SIZE: fill available width ── */
+function calcCellSize(s){
+  const gw=document.getElementById('grid-wrap');
+  let avail=gw.offsetWidth||gw.getBoundingClientRect().width;
+  const isMobile=isMobileFlow();
+  // Cap grid at 760px so it doesn't get huge on very wide screens
+  avail=Math.min(avail, isMobile ? 9999 : 760);
+  if(avail<40){
+    const sw=window.innerWidth;
+    if(isMobile){
+      avail=sw-20;
+    } else {
+      // Desktop: subtract sidebar + gap + padding, cap at 760
+      const sidebarW = sw <= 900 ? 190 : sw <= 1200 ? 220 : 270;
+      avail=Math.min(sw - sidebarW - 40, 760);
+    }
+  }
+  const gap=Math.max(1, Math.floor((s-1)*(isMobile?1.5:3)));
+  const cs=Math.floor((avail-gap)/s);
+  return Math.max(cs, 14); // never smaller than 14px
+}
+
+/* ── COLOCAÇÃO ROBUSTA: tenta várias grelhas completas e fica com a melhor ── */
+function attemptPlaceAll(L,s){
+  const wordsSorted=[...L.words].sort((a,b)=>b.length-a.length); // palavras maiores primeiro, mais difíceis de encaixar
+  let best=null;
+  const MAX_FULL_ATTEMPTS=25;
+  function reorder(pl){
+    // repõe a ordem original de L.words para a lista de palavras (cores/legenda consistentes)
+    const byWord={};pl.forEach(p=>byWord[p.word]=p);
+    return L.words.filter(w=>byWord[w]).map(w=>byWord[w]);
+  }
+  for(let attempt=0;attempt<MAX_FULL_ATTEMPTS;attempt++){
+    const g=initG(s);
+    const pl=[];
+    wordsSorted.forEach(w=>{
+      const co=placeW(g,w,L.dirs,s,900);
+      if(co)pl.push({word:w,coords:co});
+    });
+    if(pl.length===L.words.length)return{grid:g,placed:reorder(pl)}; // conseguiu colocar todas — usa já esta
+    if(!best||pl.length>best.placed.length)best={grid:g,placed:pl};
+  }
+  if(best)best.placed=reorder(best.placed);
+  return best; // melhor tentativa encontrada, mesmo que não seja perfeita
+}
+
+function buildGame(){
+  const L=LEVELS[lvl],s=L.size;
+  found=[];tipsAprendidas=[];
+  if(!(lvl in hintsSession))hintsSession[lvl]=L.hints;
+  hintsLeft=hintsSession[lvl];
+  const tt=document.getElementById('tipToast');if(tt)tt.classList.remove('show');
+  document.getElementById('hints-left').textContent=hintsLeft;
+  const res=attemptPlaceAll(L,s);
+  grid=res.grid;placed=res.placed;
+  fillR(grid,s);
+  updateRecordDisplay();
+  startTimer();
+  // Wait two frames so browser has laid out grid-wrap before measuring
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    renderGrid(s);
+    renderWL();
+    document.getElementById('msg').textContent='';
+    document.getElementById('score').textContent='0 / '+placed.length+' encontradas';
+    document.getElementById('pbar').style.width='0%';
+  }));
+}
+
+function renderGrid(s){
+  const el=document.getElementById('grid');
+  const gw=document.getElementById('grid-wrap');
+  const isMobile=isMobileFlow();
+  const gap=isMobile ? 2 : 3;
+  // Measure after layout settle
+  let avail=gw.offsetWidth||gw.getBoundingClientRect().width||Math.min(window.innerWidth*.95,860);
+  avail=Math.min(avail, isMobile ? 9999 : 760);
+  // On phones (any orientation) also cap by the available viewport height,
+  // so the grid always fits on screen instead of forcing a scroll — this
+  // matters most in landscape, where height is the tight dimension.
+  if(isMobile){
+    const top=gw.getBoundingClientRect().top;
+    const bottomBreathing=10;
+    const availH=window.innerHeight-top-bottomBreathing;
+    if(availH>60) avail=Math.min(avail, availH);
+  }
+  const totalGap=gap*(s-1);
+  const cs=Math.max(14, Math.floor((avail-totalGap)/s));
+  el.style.gridTemplateColumns=`repeat(${s},${cs}px)`;
+  el.style.gap=gap+'px';
+  el.style.width=(cs*s+totalGap)+'px';
+  el.innerHTML='';cells=[];
+  const fs=cs<=18?'0.52rem':cs<=24?'0.65rem':cs<=30?'0.78rem':cs<=38?'0.9rem':'1.05rem';
+  for(let r=0;r<s;r++)for(let c=0;c<s;c++){
+    const d=document.createElement('div');
+    d.className='cell';d.textContent=grid[r][c];
+    d.dataset.r=r;d.dataset.c=c;
+    d.style.width=cs+'px';d.style.height=cs+'px';
+    d.style.fontSize=fs;
+    d.setAttribute('role','gridcell');
+    d.setAttribute('aria-label','Letra '+grid[r][c]+', linha '+(r+1)+', coluna '+(c+1));
+    d.tabIndex=(r===0&&c===0)?0:-1;
+    el.appendChild(d);cells.push(d);
+  }
+  addEv();
+}
+
+function renderWL(){
+  const el=document.getElementById('word-list');el.innerHTML='';
+  placed.forEach((p,i)=>{
+    const d=document.createElement('div');d.className='word-item';d.id='wi-'+i;d.dataset.word=p.word;
+    const dot=document.createElement('div');dot.className='dot';dot.style.background='var(--bc'+i+')';
+    const num=document.createElement('span');num.className='num-badge';num.textContent=(i+1);num.setAttribute('aria-hidden','true');
+    d.appendChild(dot);d.appendChild(num);d.appendChild(document.createTextNode(p.word));el.appendChild(d);
+  });
+}
+
+/* clicar/tocar numa palavra já encontrada volta a mostrar a dica educativa */
+document.getElementById('word-list').addEventListener('click',e=>{
+  const item=e.target.closest('.word-item.done');
+  if(!item)return;
+  showTip(item.dataset.word);
+});
+document.getElementById('word-list').addEventListener('keydown',e=>{
+  if(e.key!=='Enter'&&e.key!==' ')return;
+  const item=e.target.closest('.word-item.done');
+  if(!item)return;
+  e.preventDefault();showTip(item.dataset.word);
+});
+
+function getLine(r1,c1,r2,c2){
+  const dr=r2-r1,dc=c2-c1,len=Math.max(Math.abs(dr),Math.abs(dc));
+  if(!len)return[[r1,c1]];
+  if(dr&&dc&&Math.abs(dr)!==Math.abs(dc))return[];
+  const sr=dr?dr/Math.abs(dr):0,sc=dc?dc/Math.abs(dc):0,line=[];
+  for(let i=0;i<=len;i++)line.push([r1+i*sr,c1+i*sc]);return line;
+}
+function checkW(line){
+  const str=line.map(([r,c])=>grid[r][c]).join(''),strR=[...str].reverse().join('');
+  for(const p of placed){if(found.includes(p.word))continue;if(str===p.word||strR===p.word)return p;}return null;
+}
+function hl(coords,i){coords.forEach(([r,c])=>{const cl=getCell(r,c);cl.className='cell found-'+i;cl.dataset.widx=i+1;});}
+function getCell(r,c){return cells[r*LEVELS[lvl].size+c];}
+function clrSel(){cells.forEach(d=>{if(d.classList.contains('selecting'))d.classList.remove('selecting');});}
+
+function onFound(p){
+  playWordFound();
+  const i=placed.indexOf(p);found.push(p.word);hl(p.coords,i);
+  const wiEl=document.getElementById('wi-'+i);
+  wiEl.classList.add('done');
+  wiEl.tabIndex=0;wiEl.setAttribute('role','button');wiEl.setAttribute('aria-label','Rever dica sobre '+p.word);
+  const pct=Math.round(found.length/placed.length*100);
+  document.getElementById('pbar').style.width=pct+'%';
+  document.getElementById('score').textContent=found.length+' / '+placed.length+' encontradas';
+  // encouragement from robot
+  const msgs=['Boa! '+p.word+'! 🎉','Encontraste '+p.word+'! 🌟',''+p.word+'! Incrível! 💪','Excelente! '+p.word+' ✅'];
+  showBub(msgs[Math.floor(Math.random()*msgs.length)]);
+  if(typeof vbJump==='function')vbJump();
+  showTip(p.word);
+  if(found.length===placed.length)setTimeout(showWin,700);
+  else{document.getElementById('msg').textContent='✅ '+p.word+'!';setTimeout(()=>{if(found.length<placed.length)document.getElementById('msg').textContent='';},1500);}
+}
+
+/* ── DICA EDUCATIVA ── */
+let tipT=null;
+function showTip(word){
+  const tip=TIPS[word];
+  if(!tip)return;
+  if(!tipsAprendidas.includes(tip))tipsAprendidas.push(tip);
+  const el=document.getElementById('tipToast');
+  el.textContent=tip;
+  clearTimeout(tipT);
+  // pequeno atraso para não competir com a mensagem "✅ palavra!"
+  setTimeout(()=>{
+    el.classList.add('show');
+    tipT=setTimeout(()=>el.classList.remove('show'),4200);
+  },500);
+}
+
+function showWin(){
+  stopTimer();
+  playWin();
+  const L=LEVELS[lvl],pct=found.length/placed.length,
+    m=pct===1?L.medals[0]:pct>=.7?L.medals[1]:L.medals[2];
+  const names={easy:'Fácil',medium:'Médio',hard:'Difícil'};
+  document.getElementById('winName').textContent=playerName;
+  document.getElementById('winFound').textContent=found.length+' / '+placed.length;
+  document.getElementById('winLevel').textContent=names[lvl];
+  document.getElementById('winMedal').textContent=m;
+  // tempo e recorde (só conta recorde se encontrou todas as palavras)
+  const winTimeEl=document.getElementById('winTime');
+  if(winTimeEl){
+    const prevRecord=getRecord(lvl);
+    let recordMsg='';
+    if(pct===1){
+      if(prevRecord==null||timerSeconds<prevRecord){
+        setRecord(lvl,timerSeconds);
+        recordMsg=' — 🎉 Novo recorde!';
+      }
+    }
+    winTimeEl.innerHTML='⏱️ Tempo: <strong>'+fmtTime(timerSeconds)+'</strong>'+recordMsg;
+  }
+  const winTipsList=document.getElementById('winTipsList'),winTips=document.getElementById('winTips');
+  if(tipsAprendidas.length){
+    winTips.style.display='block';
+    winTipsList.innerHTML=tipsAprendidas.map(t=>'<div class="win-tip-item">'+t+'</div>').join('');
+  } else {
+    winTips.style.display='none';
+  }
+  const winBubbles=['Ho ho ho! Que jogador incrível! 🎅','Parabéns '+playerName+'! 🌟','Encontraste tudo! Feliz Natal! 🎄'];
+  showBub(winBubbles[Math.floor(Math.random()*winBubbles.length)]);
+  document.getElementById('gameScreen').classList.remove('active');
+  document.getElementById('winOverlay').classList.add('active');
+  setLetterbox('#050f0a');
+  spawnConfetti();
+}
+
+/* ── EVENTS ── */
+function getC(t){const c=t&&t.closest&&t.closest('.cell');return c?{r:+c.dataset.r,c:+c.dataset.c}:null;}
+function getTC(e){const t=e.changedTouches[0];const el=document.elementFromPoint(t.clientX,t.clientY);return el?getC(el):null;}
+function stS(p){selecting=true;startCell=p;selLine=[[p.r,p.c]];clrSel();getCell(p.r,p.c).classList.add('selecting');}
+function mvS(p){if(!selecting)return;clrSel();selLine=getLine(startCell.r,startCell.c,p.r,p.c);selLine.forEach(([r,c])=>getCell(r,c).classList.add('selecting'));}
+function enS(){if(!selecting)return;selecting=false;if(selLine.length){const w=checkW(selLine);if(w)onFound(w);}clrSel();selLine=[];}
+// listener único no window (não é reatribuído a cada buildGame, evita fuga de listeners)
+window.addEventListener('mouseup',enS);
+
+function addEv(){
+  const gel=document.getElementById('grid');
+  const fresh=gel.cloneNode(false);while(gel.firstChild)fresh.appendChild(gel.firstChild);gel.parentNode.replaceChild(fresh,gel);
+  const g2=document.getElementById('grid');
+  g2.addEventListener('mousedown',e=>{const p=getC(e.target);if(p)stS(p);});
+  g2.addEventListener('mousemove',e=>{if(selecting){const p=getC(e.target);if(p)mvS(p);}});
+  g2.addEventListener('touchstart',e=>{const p=getTC(e);if(p){stS(p);e.preventDefault();}},{passive:false});
+  g2.addEventListener('touchmove',e=>{if(selecting){e.preventDefault();const p=getTC(e);if(p)mvS(p);}},{passive:false});
+  g2.addEventListener('touchend',e=>{enS();},{passive:false});
+
+  /* ── NAVEGAÇÃO POR TECLADO ── */
+  let focusPos={r:0,c:0};
+  function focusCell(p){
+    focusPos=p;
+    const cell=getCell(p.r,p.c);
+    if(!cell)return;
+    cells.forEach(cl=>{cl.tabIndex=-1;});
+    cell.tabIndex=0;
+    cell.focus();
+  }
+  g2.addEventListener('keydown',e=>{
+    const s=LEVELS[lvl].size;
+    let{r,c}=focusPos;
+    if(e.key==='ArrowUp')r=Math.max(0,r-1);
+    else if(e.key==='ArrowDown')r=Math.min(s-1,r+1);
+    else if(e.key==='ArrowLeft')c=Math.max(0,c-1);
+    else if(e.key==='ArrowRight')c=Math.min(s-1,c+1);
+    else if(e.key===' '||e.key==='Enter'){
+      e.preventDefault();
+      if(!selecting)stS(focusPos);else enS();
+      return;
+    } else if(e.key==='Escape'){
+      if(selecting){selecting=false;clrSel();selLine=[];}
+      return;
+    } else return;
+    e.preventDefault();
+    if(selecting)mvS({r,c});
+    focusCell({r,c});
+  });
+}
+
+/* restore found colours + done states after grid re-render */
+function reapplyFound(){
+  placed.forEach((p,i)=>{
+    if(found.includes(p.word)){
+      hl(p.coords,i);
+      const wi=document.getElementById('wi-'+i);
+      if(wi)wi.classList.add('done');
+    }
+  });
+}
+
+/* redraw on resize */
+let resizeT=null;
+function redrawGridIfActive(){
+  if(grid.length&&document.getElementById('gameScreen').classList.contains('active')){
+    renderGrid(LEVELS[lvl].size);
+    reapplyFound();
+  }
+}
+window.addEventListener('resize',()=>{clearTimeout(resizeT);resizeT=setTimeout(redrawGridIfActive,200);});
+/* orientationchange sometimes fires before the browser updates
+   innerWidth/innerHeight, so re-check a little later too */
+window.addEventListener('orientationchange',()=>{setTimeout(redrawGridIfActive,350);});
+
+/* ── LEVEL BUTTONS ── */
+document.querySelectorAll('#startScreen .lvl-btn').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#startScreen .lvl-btn').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');startSel=b.dataset.level;
+  document.getElementById('startLvlDesc').textContent=LEVELS[startSel].label;
+}));
+document.querySelectorAll('#gameScreen .lvl-btn').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#gameScreen .lvl-btn').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');lvl=b.dataset.level;
+  document.getElementById('gameLvlDesc').textContent=LEVELS[lvl].label;
+  buildGame();
+}));
+
+/* ── FUNDO DA FAIXA EXTERIOR (letterbox) ──
+   #0e2a1f liso = tom do ecrã de jogo (sem vinheta, animation:none)
+   #050f0a escuro = tom da vinheta radial dos outros ecrãs (menu, vitória) */
+function setLetterbox(c){document.body.style.background=c;document.documentElement.style.background=c;}
+
+/* ── START ── */
+document.getElementById('btnStart').addEventListener('click',()=>{
+  playerName=document.getElementById('playerName').value.trim()||'Amigo do Natal';
+  lvl=startSel;
+  document.getElementById('startScreen').classList.remove('active');
+  document.getElementById('gameScreen').classList.add('active');
+  setLetterbox('#0e2a1f');
+  document.getElementById('robot-player-name') && (document.getElementById('robot-player-name').textContent='👤 '+playerName);
+  document.getElementById('fixed-robot-name').textContent='👤 '+playerName;
+  document.querySelector('.robot-wrap') && document.querySelector('.robot-wrap').classList.add('visible');
+  document.getElementById('fixed-robot-wrap').classList.add('visible');
+  document.querySelectorAll('#gameScreen .lvl-btn').forEach(b=>b.classList.toggle('active',b.dataset.level===lvl));
+  document.getElementById('gameLvlDesc').textContent=LEVELS[lvl].label;
+  // wait for layout then build
+  requestAnimationFrame(()=>requestAnimationFrame(buildGame));
+});
+
+/* ── HINT ── */
+document.getElementById('btn-hint').addEventListener('click',()=>{
+  if(!hintsLeft)return;
+  const rem=placed.filter(p=>!found.includes(p.word));if(!rem.length)return;
+  const p=rem[Math.floor(Math.random()*rem.length)],i=placed.indexOf(p);
+  p.coords.forEach(([r,c])=>{
+    const cl=getCell(r,c);
+    cl.style.background='var(--bc'+i+')';cl.style.color='var(--fc'+i+')';
+    setTimeout(()=>{if(!found.includes(p.word)){cl.style.background='';cl.style.color='';}},2200);
+  });
+  hintsLeft--;hintsSession[lvl]=hintsLeft;document.getElementById('hints-left').textContent=hintsLeft;
+  document.getElementById('msg').textContent='💡 Procura: '+p.word;
+  showBub('Procura a palavra '+p.word+'! 🕵️');
+  setTimeout(()=>{if(found.length<placed.length)document.getElementById('msg').textContent='';},2400);
+});
+
+/* ── NAV ── */
+document.getElementById('btn-restart').addEventListener('click',buildGame);
+document.getElementById('btn-menu').addEventListener('click',goMenu);
+document.getElementById('btnWinRestart').addEventListener('click',()=>{
+  stopConf();
+  document.getElementById('winOverlay').classList.remove('active');
+  document.getElementById('gameScreen').classList.add('active');
+  setLetterbox('#0e2a1f');
+  buildGame();
+});
+document.getElementById('btnWinMenu').addEventListener('click',()=>{stopConf();goMenu();});
+
+function goMenu(){
+  stopTimer();
+  document.getElementById('gameScreen').classList.remove('active');
+  document.getElementById('winOverlay').classList.remove('active');
+  document.getElementById('startScreen').classList.add('active');
+  setLetterbox('#050f0a');
+  document.querySelector('.robot-wrap') && document.querySelector('.robot-wrap').classList.remove('visible');
+  document.getElementById('tipToast').classList.remove('show');
+  showBub('Encontra as palavras do Natal! 🔍🎄');
+  stopConf();
+}
+
+/* ── CONFETTI ── */
+let cInt=null;
+const CE=['❄️','🌟','🎄','🎁','⭐','🔔','🍬','🎅'];
+function spawnConfetti(){
+  const el=document.getElementById('confetti');el.classList.remove('hidden');el.innerHTML='';
+  cInt=setInterval(()=>{
+    for(let i=0;i<5;i++){
+      const s=document.createElement('span');s.textContent=CE[Math.floor(Math.random()*CE.length)];
+      s.style.left=Math.random()*100+'vw';
+      s.style.animationDuration=(2+Math.random()*2.5)+'s';
+      s.style.animationDelay=Math.random()+'s';
+      s.style.fontSize=(14+Math.random()*14)+'px';
+      el.appendChild(s);setTimeout(()=>s.remove(),4500);
+    }
+  },280);
+}
+function stopConf(){clearInterval(cInt);const el=document.getElementById('confetti');el.classList.add('hidden');el.innerHTML='';}
+
+/* ── ROBOT BUBBLE ── */
+const MSGS=[
+  'Encontra todas as palavras! 🔍',
+  'Vamos lá, és incrível! 🌟',
+  'Não desistas, consegues! 💪',
+  'Que tal usar uma dica? 💡',
+  'Arrasta pelas letras! ✋',
+  'Ho ho ho! Feliz Natal! 🎅',
+  'Já ouviste os sinos? 🔔',
+  'Já estás quase! Força! 🚀',
+  'Encontra a próxima! 🎯',
+  'Que cheirinho a bolo-rei! 🎂',
+  'Está a nevar lá fora! ❄️',
+  'O Pai Natal está a ver! 🎁',
+];
+let bubT=null;
+function showBub(msg){
+  const b=document.getElementById('fixed-bubble');
+  b.textContent=msg;b.classList.add('show');
+  clearTimeout(bubT);bubT=setTimeout(()=>b.classList.remove('show'),3500);
+}
+const vbRobot=document.getElementById('fixed-vb-robot');
+const vbCtx=vbRobot.getContext('2d');
+let vbBusy=false; // impede animações sobrepostas
+
+function vbSetFrame(blink,step,armsUp){ drawVanBerto(vbCtx,blink,step,armsUp); }
+vbSetFrame(false,-1,false); // pose parada inicial, olhos abertos, sorriso
+
+/* piscar de olhos — rápido, não bloqueia outras animações */
+function vbBlink(){
+  if(vbBusy)return;
+  vbSetFrame(true,-1,false);
+  setTimeout(()=>{ if(!vbBusy) vbSetFrame(false,-1,false); },180);
+}
+
+/* marcha no lugar — pernas e braços alternam, tal como no jogo original */
+function vbWalk(steps=6,speed=170){
+  if(vbBusy)return;
+  vbBusy=true;
+  let i=0;
+  const iv=setInterval(()=>{
+    vbSetFrame(false, i%2===0?0:1, false);
+    i++;
+    if(i>=steps){
+      clearInterval(iv);
+      vbSetFrame(false,-1,false);
+      vbBusy=false;
+    }
+  },speed);
+}
+
+/* salto — braços para cima, cara feliz, e um "pulo" visual com CSS */
+function vbJump(){
+  if(vbBusy)return;
+  vbBusy=true;
+  vbRobot.classList.remove('bounce');void vbRobot.offsetWidth;vbRobot.classList.add('bounce');
+  vbSetFrame('happy',-1,true);
+  setTimeout(()=>{
+    vbSetFrame(false,-1,false);
+    vbBusy=false;
+  },700);
+}
+
+/* comportamento espontâneo: de vez em quando pisca, marcha ou salta sozinho */
+setInterval(()=>{
+  if(vbBusy)return;
+  const r=Math.random();
+  if(r<0.18)vbJump();
+  else if(r<0.5)vbWalk();
+  else vbBlink();
+},3600);
+
+vbRobot.addEventListener('click',()=>{
+  vbJump();
+  showBub(MSGS[Math.floor(Math.random()*MSGS.length)]);
+});
+vbRobot.addEventListener('keydown',e=>{
+  if(e.key==='Enter'||e.key===' '){
+    vbJump();
+    showBub(MSGS[Math.floor(Math.random()*MSGS.length)]);
+  }
+});
+// periodic encouragement during game
+setInterval(()=>{
+  if(document.getElementById('gameScreen').classList.contains('active')&&found.length<placed.length&&placed.length>0){
+    const encMsgs=['Força! Já encontraste '+found.length+'! 💪','Continua! Estás a arrasar! 🌟','Consegues! Não desistas! 🎯'];
+    showBub(encMsgs[Math.floor(Math.random()*encMsgs.length)]);
+  }
+},18000);
+
+setTimeout(()=>showBub('Ho ho ho! Sou o VanBerto\'s! Vamos descobrir o Natal! 🎄'),900);
+
+/* ── MODO DALTÓNICO ── */
+let colorblindMode=false;
+try{colorblindMode=localStorage.getItem('vb_cbmode')==='1';}catch(e){}
+const btnCB=document.getElementById('btn-colorblind');
+function applyCBMode(){
+  document.body.classList.toggle('cb-mode',colorblindMode);
+  btnCB.classList.toggle('active',colorblindMode);
+  btnCB.title=colorblindMode?'Desativar modo daltónico':'Modo daltónico (mostra números nas palavras)';
+}
+applyCBMode();
+btnCB.addEventListener('click',()=>{
+  colorblindMode=!colorblindMode;
+  try{localStorage.setItem('vb_cbmode',colorblindMode?'1':'0');}catch(e){}
+  applyCBMode();
+});
+
+/* ── MUTE ── */
+const btnMute=document.getElementById('btn-mute');
+function updateMuteIcon(){
+  btnMute.textContent=muted?'🔇':'🔊';
+  btnMute.title=muted?'Ativar som':'Silenciar som';
+}
+updateMuteIcon();
+btnMute.addEventListener('click',()=>{
+  muted=!muted;
+  try{localStorage.setItem('vb_muted',muted?'1':'0');}catch(e){}
+  updateMuteIcon();
+});
+
+/* ── FULLSCREEN ── */
+const btnFS=document.getElementById('btn-fullscreen');
+function updateFSIcon(){
+  const isFS=!!(document.fullscreenElement||document.webkitFullscreenElement||document.mozFullScreenElement);
+  btnFS.textContent=isFS?'✕':'⛶';
+  btnFS.title=isFS?'Sair do ecrã inteiro':'Ecrã inteiro';
+}
+btnFS.addEventListener('click',()=>{
+  const isFS=!!(document.fullscreenElement||document.webkitFullscreenElement||document.mozFullScreenElement);
+  if(!isFS){
+    const el=document.documentElement;
+    if(el.requestFullscreen)el.requestFullscreen();
+    else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();
+    else if(el.mozRequestFullScreen)el.mozRequestFullScreen();
+  } else {
+    if(document.exitFullscreen)document.exitFullscreen();
+    else if(document.webkitExitFullscreen)document.webkitExitFullscreen();
+    else if(document.mozCancelFullScreen)document.mozCancelFullScreen();
+  }
+});
+document.addEventListener('fullscreenchange',()=>{updateFSIcon();setTimeout(()=>{if(grid.length&&document.getElementById('gameScreen').classList.contains('active')){renderGrid(LEVELS[lvl].size);reapplyFound();}},150);});
+document.addEventListener('webkitfullscreenchange',()=>{updateFSIcon();setTimeout(()=>{if(grid.length&&document.getElementById('gameScreen').classList.contains('active')){renderGrid(LEVELS[lvl].size);reapplyFound();}},150);});
+document.addEventListener('mozfullscreenchange',()=>{updateFSIcon();setTimeout(()=>{if(grid.length&&document.getElementById('gameScreen').classList.contains('active')){renderGrid(LEVELS[lvl].size);reapplyFound();}},150);});
+
+/* ── NEVE ── */
+(function(){
+  const el=document.getElementById('snow');
+  if(!el)return;
+  for(let i=0;i<30;i++){
+    const f=document.createElement('span');
+    f.textContent=Math.random()<.7?'❄':'•';
+    f.style.left=(Math.random()*100)+'%';
+    f.style.fontSize=(10+Math.random()*14)+'px';
+    f.style.animationDuration=(9+Math.random()*10)+'s';
+    f.style.animationDelay=(-Math.random()*18)+'s';
+    el.appendChild(f);
+  }
+})();
+
+/* ── VanBerto's a celebrar no ecrã final ── */
+(function(){
+  const cv=document.getElementById('win-robot');
+  if(!cv||typeof drawVanBerto!=='function')return;
+  const cx=cv.getContext('2d');let up=true;
+  function f(){drawVanBerto(cx,'happy',-1,up);up=!up;}
+  f();setInterval(f,450);
+})();
+</script>
+</body></html>
